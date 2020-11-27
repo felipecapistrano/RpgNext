@@ -1,65 +1,119 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Box,
+  Card,
+  CardMedia,
+  CardActionArea,
+  CardContent,
+  Fab,
+  Paper,
+  Typography,
+  Grid,
+} from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import useUser from "../components/hooks/useUser";
+import useSWR from "swr";
+import ReactLoading from "react-loading";
+
+import { CreateGame } from "../components/home";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    marginLeft: "auto",
+    marginRight: "auto",
+    justifyContent: "center",
+    width: "100%",
+    minHeight: "100vh",
+    backgroundColor: "#212121",
+  },
+  paper: {
+    backgroundColor: theme.palette.primary.main,
+    overflowY: "scroll",
+    overflowX: "hidden",
+    scrollbarWidth: "thin",
+    minHeight: "90vh",
+    maxHeight: "90vh",
+    alignSelf: "center",
+    width: "50vw",
+  },
+  box: {
+    padding: "0px",
+  },
+  title: {
+    textAlign: "center",
+  },
+  card: {
+    height: "160px",
+    padding: "0px",
+  },
+  media: {
+    height: "160px",
+    width: "100%",
+  },
+  content: {
+    marginLeft: "8px",
+    padding: "0px",
+  },
+  fab: {
+    position: "absolute",
+    bottom: "7vh",
+    right: "27vw",
+  },
+}));
 
 export default function Home() {
+  const classes = useStyles();
+  const user = useUser();
+  const { data, mutate } = useSWR(`/api/games/list?id=${user}`);
+
+  const [open, setOpen] = useState(false);
+  const toggle = () => setOpen(!open);
+
+  if (!data) return <ReactLoading type={"spin"} />;
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <Box className={classes.box} display="flex" flexDirection="column">
+          <Typography className={classes.title} variant="h4">
+            Your Games
+          </Typography>
+          {data.map((game) => (
+            <Card className={classes.card}>
+              <CardActionArea>
+                <Grid container>
+                  <Grid item xs={5}>
+                    <CardMedia>
+                      <img src={game.image} className={classes.media}></img>
+                    </CardMedia>
+                  </Grid>
+                  <Grid item xs={7}>
+                    <CardContent className={classes.content}>
+                      <Typography variant="h5">{game.name}</Typography>
+                      <Typography
+                        gutterBottom
+                        variant="body2"
+                      >{`Genre: ${game.genre}`}</Typography>
+                      <Typography variant="body2">{`Description: ${game.description}`}</Typography>
+                    </CardContent>
+                  </Grid>
+                </Grid>
+              </CardActionArea>
+            </Card>
+          ))}
+          <Fab
+            className={classes.fab}
+            onClick={() => toggle()}
+            color="secondary"
+            size="medium"
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+            <AddIcon />
+          </Fab>
+        </Box>
+        <CreateGame mutate={mutate} open={open} onClose={toggle} />
+      </Paper>
     </div>
-  )
+  );
 }
