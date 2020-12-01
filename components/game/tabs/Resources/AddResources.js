@@ -3,13 +3,13 @@ import { Fab, Dialog } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import { makeStyles } from "@material-ui/core/styles";
-import ModalCreateGame from "./ModalCreateGame";
+import ModalAddResources from "./ModalAddResources";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: "absolute",
-    bottom: "7vh",
-    right: "27vw",
+    bottom: "3vh",
+    right: "12vw",
   },
   paper: {
     backgroundColor: theme.palette.primary.main,
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateGame({ mutate }) {
+export default function AddResources() {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -33,11 +33,8 @@ export default function CreateGame({ mutate }) {
       >
         <AddIcon />
       </Fab>
-      <Dialog
-        open={open}
-        onClose={toggle}
-      >
-        <ModalCreateGame mutate={mutate} onClose={toggle} />
+      <Dialog open={open} onClose={toggle}>
+        <ModalAddResources onClose={toggle} />
       </Dialog>
     </>
   );

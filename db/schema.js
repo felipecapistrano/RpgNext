@@ -11,11 +11,12 @@ export const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
 const GameSchema = Schema({
   name: { type: String, required: true },
-  owner: { type: String, required: true },
+  owner: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   genre: String,
   image: String,
   description: String,
-  permittedusers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  resources: [Object],
+  players: [{ type: Schema.Types.ObjectId, ref: "User" }],
   active: Boolean,
 });
 

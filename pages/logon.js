@@ -45,8 +45,8 @@ export default function Logon() {
             value={value}
             onChange={handleChange}
           >
-            <Tab label="Login"></Tab>
-            <Tab label="Register"></Tab>
+            <Tab label="Login" />
+            <Tab label="Register" />
           </Tabs>
           {value === 0 && <Login />}
           {value === 1 && <Register />}

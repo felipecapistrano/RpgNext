@@ -7,8 +7,15 @@ export default async (req, res) => {
   switch (req.method) {
     case "GET": {
       const { id } = req.query;
-      const games = await Game.find({ players: id, active: true });
-      return res.json(games);
+      const game = await Game.findOne({ _id: id, active: true })
+        .populate("players")
+        .populate("owner");
+      if (game) {
+        return res.json(game);
+      } else {
+        res.statusCode = 401;
+        return res.send("Game doesn't exist");
+      }
     }
     default:
       res.statusCode = 500;

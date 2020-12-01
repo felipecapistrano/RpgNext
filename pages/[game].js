@@ -1,6 +1,8 @@
+import { useRouter } from "next/router";
 import useUser from "../components/hooks/useUser";
-import YourGames from "../components/home";
 import { makeStyles } from "@material-ui/core/styles";
+
+import GameContainer from "../components/game";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,13 +16,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Home() {
+export default function Game() {
   const classes = useStyles();
+  const router = useRouter();
+  const { game } = router.query;
   const user = useUser();
+
+  if (!game || !user) return null;
 
   return (
     <div className={classes.root}>
-      <YourGames user={user} />
+      <GameContainer game={game} user={user} />
     </div>
   );
 }

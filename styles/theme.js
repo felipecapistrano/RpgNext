@@ -68,6 +68,9 @@ const theme = createMuiTheme({
     MuiCheckbox: {
       color: "primary",
     },
+    MuiDialog: {
+      PaperProps: { style: { padding: spacing } },
+    },
   },
 });
 
