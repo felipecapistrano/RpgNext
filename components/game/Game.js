@@ -4,7 +4,7 @@ import { Box, Paper, Tab, Tabs, Typography } from "@material-ui/core";
 import useSWR from "swr";
 import ReactLoading from "react-loading";
 
-import { Info, Resources } from "./";
+import { Info, Resources, Sheet } from "./";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,8 +63,8 @@ export default function Game({ game, user }) {
           >
             <Tab label="Info" />
             <Tab label="Resources" />
-            <Tab label="Sheets" />
-            <Tab label="Npcs" />
+            <Tab label="Sheet" />
+            <Tab label="Characters" />
             <Tab label="Notes" />
           </Tabs>
           {value === 0 && (
@@ -92,6 +92,17 @@ export default function Game({ game, user }) {
                 flexDirection="column"
               >
                 <Resources resources={data.resources} isOwner={isOwner} />
+              </Box>
+            </Paper>
+          )}
+          {value === 2 && (
+            <Paper>
+              <Box
+                className={classes.container}
+                display="flex"
+                flexDirection="column"
+              >
+                <Sheets sheet={data.sheet} isOwner={isOwner} />
               </Box>
             </Paper>
           )}

@@ -16,6 +16,7 @@ const GameSchema = Schema({
   image: String,
   description: String,
   resources: [Object],
+  sheet: [Object], 
   players: [{ type: Schema.Types.ObjectId, ref: "User" }],
   active: Boolean,
 });
