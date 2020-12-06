@@ -9,7 +9,8 @@ export default async (req, res) => {
       const { id } = req.query;
       const game = await Game.findOne({ _id: id, active: true })
         .populate("players")
-        .populate("owner");
+        .populate("owner")
+        .populate("characters");
       if (game) {
         return res.json(game);
       } else {

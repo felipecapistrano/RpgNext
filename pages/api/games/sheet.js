@@ -1,5 +1,5 @@
 import { dbConnect } from "../../../db/connection";
-import { Game } from "../../../db/schema";
+import { Game, Character } from "../../../db/schema";
 
 export default async (req, res) => {
   await dbConnect();
@@ -11,6 +11,9 @@ export default async (req, res) => {
         { _id: id, active: true },
         { sheet: fields }
       );
+      await Game.updateOne({ _id: game }, { characters: [] });
+      await Character.updateMany({ game: id }, { active: false });
+
       return res.json(game);
     }
   }

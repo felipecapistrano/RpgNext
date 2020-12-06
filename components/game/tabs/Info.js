@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function Info({ image, owner, genre, players, description }) {
   const classes = useStyles();
-  const playerList = players.map((player) => player.name);
+  const playerList = players.map((player) => `${player.name} `);
 
   return (
     <>

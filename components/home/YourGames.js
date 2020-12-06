@@ -70,7 +70,7 @@ export default function YourGames({ user }) {
               <Grid container>
                 <Grid item xs={5}>
                   <CardMedia>
-                    <img src={game.image} className={classes.media}></img>
+                    <img src={game.image} className={classes.media} />
                   </CardMedia>
                 </Grid>
                 <Grid item xs={7}>

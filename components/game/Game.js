@@ -1,22 +1,15 @@
-import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Paper, Tab, Tabs, Typography } from "@material-ui/core";
+import { Box, Paper, Typography } from "@material-ui/core";
 import useSWR from "swr";
 import ReactLoading from "react-loading";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-import { Info, Resources, Sheet } from "./";
+import OwnerGame from "./OwnerGame";
+import PlayerGame from "./PlayerGame";
+import JoinGame from "./JoinGame";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    marginLeft: "auto",
-    marginRight: "auto",
-    textAlign: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: "100vh",
-    backgroundColor: "#212121",
-  },
   paper: {
     backgroundColor: theme.palette.primary.main,
     alignSelf: "center",
@@ -37,77 +30,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Game({ game, user }) {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
-  const { data } = useSWR(`/api/games/get?id=${game}`);
+  const router = useRouter();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const { data } = useSWR(`/api/games/get?id=${game}`);
 
   if (!data) return <ReactLoading />;
 
-  const isOwner = user === data.owner._id;
+  const isOwner = data.owner._id === user;
 
+  const players = data.players.map((player) => player._id);
+  const isPlayer = players.includes(user);
+
+  async function handleClose(bool) {
+    if (bool) await axios.post("/api/games/join", { id: game, player: user });
+    router.reload();
+  }
+
+  if (!isPlayer) return <JoinGame open handleClose={handleClose} />;
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Box display="flex" flexDirection="column">
-          <Typography variant="h4" gutterBottom>
-            {data.name}
-          </Typography>
-          <Tabs
-            className={classes.tabs}
-            value={value}
-            onChange={handleChange}
-            centered
-          >
-            <Tab label="Info" />
-            <Tab label="Resources" />
-            <Tab label="Sheet" />
-            <Tab label="Characters" />
-            <Tab label="Notes" />
-          </Tabs>
-          {value === 0 && (
-            <Paper>
-              <Box
-                className={classes.container}
-                display="flex"
-                flexDirection="column"
-              >
-                <Info
-                  image={data.image}
-                  genre={data.genre}
-                  description={data.description}
-                  players={data.players}
-                  owner={data.owner}
-                />
-              </Box>
-            </Paper>
-          )}
-          {value === 1 && (
-            <Paper>
-              <Box
-                className={classes.container}
-                display="flex"
-                flexDirection="column"
-              >
-                <Resources resources={data.resources} isOwner={isOwner} />
-              </Box>
-            </Paper>
-          )}
-          {value === 2 && (
-            <Paper>
-              <Box
-                className={classes.container}
-                display="flex"
-                flexDirection="column"
-              >
-                <Sheets sheet={data.sheet} isOwner={isOwner} />
-              </Box>
-            </Paper>
-          )}
-        </Box>
-      </Paper>
-    </div>
+    <Paper className={classes.paper}>
+      <Box display="flex" flexDirection="column">
+        <Typography align="center" variant="h4" gutterBottom>
+          {data.name}
+        </Typography>
+        {isOwner ? (
+          <OwnerGame game={game} data={data} classes={classes} />
+        ) : (
+          <PlayerGame game={game} data={data} classes={classes} />
+        )}
+      </Box>
+    </Paper>
   );
 }
