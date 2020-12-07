@@ -9,7 +9,7 @@ import {
 
 import AddResources from "./AddResources";
 
-export function Resources({ resources, isOwner }) {
+export function Resources({ resources, isOwner, game }) {
   return (
     <>
       <Table>
@@ -30,7 +30,7 @@ export function Resources({ resources, isOwner }) {
           ))}
         </TableBody>
       </Table>
-      {isOwner && <AddResources />}
+      {isOwner && <AddResources game={game} />}
     </>
   );
 }

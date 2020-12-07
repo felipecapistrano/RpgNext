@@ -21,9 +21,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function Character({ characters, sheet }) {
+export function Character({ characters, sheet, game, user }) {
   const classes = useStyles();
-  const user = useUser();
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
 
@@ -31,7 +30,6 @@ export function Character({ characters, sheet }) {
     (character) => character.user === user
   )[0];
 
-  console.log(character);
   return (
     <>
       {character ? (
@@ -72,7 +70,7 @@ export function Character({ characters, sheet }) {
           <Typography>
             You haven't created a character for this game yet.
           </Typography>
-          <CreateCharacter sheet={sheet} />
+          <CreateCharacter sheet={sheet} game={game} user={user} />
         </>
       )}
     </>

@@ -9,13 +9,9 @@ import {
   DialogContent,
   DialogActions,
 } from "@material-ui/core";
-import { useRouter } from "next/router";
 import { mutate } from "swr";
 
-export default function ModalAddResources({ onClose }) {
-  const router = useRouter();
-  const { game } = router.query;
-
+export default function ModalAddResources({ onClose, game }) {
   return (
     <Formik
       initialValues={{ name: "", link: "" }}
@@ -26,7 +22,7 @@ export default function ModalAddResources({ onClose }) {
             resources: values,
           });
           resetForm();
-          mutate(`/api/games/get?id=${game}`);
+          mutate(`/api/games/get?gameId=${game}`);
           onClose();
         } catch (e) {
           alert(e);

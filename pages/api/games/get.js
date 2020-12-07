@@ -6,8 +6,8 @@ export default async (req, res) => {
 
   switch (req.method) {
     case "GET": {
-      const { id } = req.query;
-      const game = await Game.findOne({ _id: id, active: true })
+      const { gameId } = req.query;
+      const game = await Game.findOne({ _id: gameId, active: true })
         .populate("players")
         .populate("owner")
         .populate("characters");

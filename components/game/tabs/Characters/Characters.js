@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function Characters({ sheet, characters }) {
+export function Characters({ sheet, characters, game, user }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
@@ -66,7 +66,7 @@ export function Characters({ sheet, characters }) {
       ) : (
         <Typography>There are no characters created</Typography>
       )}
-      <CreateCharacter sheet={sheet} />
+      <CreateCharacter sheet={sheet} game={game} user={user} />
     </>
   );
 }

@@ -5,13 +5,13 @@ import {
   CardMedia,
   CardActionArea,
   CardContent,
+  CircularProgress,
   Paper,
   Typography,
   Grid,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import ReactLoading from "react-loading";
 
 import CreateGame from "./CreateGame";
 
@@ -54,9 +54,9 @@ const useStyles = makeStyles((theme) => ({
 export default function YourGames({ user }) {
   const classes = useStyles();
   const router = useRouter();
-  const { data, mutate } = useSWR(`/api/games/list?id=${user}`);
+  const { data, mutate } = useSWR(`/api/games/list?playerId=${user}`);
 
-  if (!data) return <ReactLoading type={"spin"} />;
+  if (!data) return <CircularProgress />;
 
   return (
     <Paper className={classes.paper}>
@@ -87,7 +87,7 @@ export default function YourGames({ user }) {
             </CardActionArea>
           </Card>
         ))}
-        <CreateGame mutate={mutate} />
+        <CreateGame mutate={mutate} user={user} />
       </Box>
     </Paper>
   );

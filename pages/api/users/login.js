@@ -7,7 +7,11 @@ export default async (req, res) => {
   switch (req.method) {
     case "POST": {
       const { name, password } = req.body;
-      const user = await User.findOne({ name: name, password: password });
+      const user = await User.findOne({
+        name: name,
+        password: password,
+        active: true,
+      });
       if (user) {
         return res.json(user);
       } else {
