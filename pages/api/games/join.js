@@ -6,10 +6,10 @@ export default async (req, res) => {
 
   switch (req.method) {
     case "POST": {
-      const { id, player } = req.body;
+      const { gameId, userId } = req.body;
       const game = await Game.updateOne(
-        { _id: id, active: true },
-        { $push: { players: player } }
+        { _id: gameId, active: true },
+        { $push: { players: userId } }
       );
       return res.json(game);
     }

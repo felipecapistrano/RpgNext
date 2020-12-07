@@ -7,17 +7,16 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
-import { useRouter } from "next/router";
 import axios from "axios";
 import { mutate } from "swr";
 
-import useUser from "../../../hooks/useUser";
-
-export default function ModalCreateCharacter({ onClose, sheet, character }) {
-  const router = useRouter();
-  const { game } = router.query;
-  const user = useUser();
-
+export default function ModalCreateCharacter({
+  onClose,
+  sheet,
+  character,
+  game,
+  user,
+}) {
   const sheetFields = sheet.map((field) => ({
     ...field,
     value: "",
@@ -29,12 +28,12 @@ export default function ModalCreateCharacter({ onClose, sheet, character }) {
       onSubmit={async (values, { resetForm }) => {
         try {
           await axios.post("/api/characters/create", {
-            game: game,
-            user: user,
+            gameId: game,
+            userId: user,
             ...values,
           });
           resetForm();
-          mutate(`/api/games/get?id=${game}`);
+          mutate(`/api/games/get?gameId=${game}`);
           onClose();
         } catch (e) {
           alert(e);

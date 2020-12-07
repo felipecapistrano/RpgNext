@@ -2,7 +2,7 @@ import useUser from "../components/hooks/useUser";
 import YourGames from "../components/home";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     marginLeft: "auto",

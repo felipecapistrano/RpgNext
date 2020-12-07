@@ -9,7 +9,6 @@ import {
   Button,
   Box,
 } from "@material-ui/core";
-import { useRouter } from "next/router";
 import axios from "axios";
 import { mutate } from "swr";
 
@@ -18,11 +17,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 const types = ["Text", "TextArea"];
 
-export default function ModalEditSheet({ onClose, sheet }) {
-  const router = useRouter();
-  const { game } = router.query;
-  console.log(sheet);
-
+export default function ModalEditSheet({ onClose, sheet, game }) {
   return (
     <Formik
       initialValues={{
@@ -34,9 +29,8 @@ export default function ModalEditSheet({ onClose, sheet }) {
             id: game,
             fields: values.fields,
           });
-          console.log(values.fields);
           resetForm();
-          mutate(`/api/games/get?id=${game}`);
+          mutate(`/api/games/get?gameId=${game}`);
           onClose();
         } catch (e) {
           alert(e);

@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function CreateCharacter({ sheet }) {
+export default function CreateCharacter({ sheet, game, user }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -38,7 +38,12 @@ export default function CreateCharacter({ sheet }) {
         open={open}
         onClose={toggle}
       >
-        <ModalCreateCharacter onClose={toggle} sheet={sheet} />
+        <ModalCreateCharacter
+          onClose={toggle}
+          sheet={sheet}
+          game={game}
+          user={user}
+        />
       </Dialog>
     </>
   );

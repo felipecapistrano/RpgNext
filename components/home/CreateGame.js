@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateGame({ mutate }) {
+export default function CreateGame({ mutate, user }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -33,11 +33,8 @@ export default function CreateGame({ mutate }) {
       >
         <AddIcon />
       </Fab>
-      <Dialog
-        open={open}
-        onClose={toggle}
-      >
-        <ModalCreateGame mutate={mutate} onClose={toggle} />
+      <Dialog open={open} onClose={toggle}>
+        <ModalCreateGame mutate={mutate} onClose={toggle} user={user} />
       </Dialog>
     </>
   );

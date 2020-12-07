@@ -1,17 +1,23 @@
 import { useState } from "react";
-import { Box, Paper, Tab, Tabs, Typography } from "@material-ui/core";
-import ReactLoading from "react-loading";
+import {
+  Box,
+  CircularProgress,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from "@material-ui/core";
 
 import { Info, Resources, Sheet, Characters } from "./";
 
-export default function OwnerGame({ data, classes, game }) {
+export default function OwnerGame({ data, classes, game, user }) {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  if (!data) return <ReactLoading />;
+  if (!data) return <CircularProgress />;
 
   return (
     <>
@@ -50,7 +56,7 @@ export default function OwnerGame({ data, classes, game }) {
             display="flex"
             flexDirection="column"
           >
-            <Resources resources={data.resources} isOwner />
+            <Resources resources={data.resources} game={game} isOwner />
           </Box>
         </Paper>
       )}
@@ -61,7 +67,7 @@ export default function OwnerGame({ data, classes, game }) {
             display="flex"
             flexDirection="column"
           >
-            <Sheet sheet={data.sheet} />
+            <Sheet sheet={data.sheet} game={game} />
           </Box>
         </Paper>
       )}
@@ -76,6 +82,7 @@ export default function OwnerGame({ data, classes, game }) {
               characters={data.characters}
               sheet={data.sheet}
               game={game}
+              user={user}
             />
           </Box>
         </Paper>

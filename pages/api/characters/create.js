@@ -8,8 +8,7 @@ export default async (req, res) => {
 
   switch (req.method) {
     case "POST": {
-      const { _id, user, image, game, ...params } = req.body;
-      console.log(_id);
+      const { _id, userId, gameId, image, ...params } = req.body;
       const character = _id
         ? await Character.updateOne({ _id: _id }, { image: image, ...params })
         : await new Character({
@@ -17,12 +16,12 @@ export default async (req, res) => {
             image: image
               ? image
               : "https://www.josco.com.au/wp-content/uploads/2016/05/Image-Unavailable.jpg",
-            user: convert(user),
-            game: convert(game),
+            user: convert(userId),
+            game: convert(gameId),
             active: true,
           }).save();
       await Game.updateOne(
-        { _id: game, active: true },
+        { _id: gameId, active: true },
         { $push: { characters: character._id } }
       );
 

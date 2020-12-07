@@ -9,11 +9,8 @@ import {
   DialogContent,
   DialogActions,
 } from "@material-ui/core";
-import useUser from "../hooks/useUser";
 
-export default function ModalCreateGame({ onClose, mutate }) {
-  const user = useUser();
-
+export default function ModalCreateGame({ onClose, mutate, user }) {
   return (
     <Formik
       initialValues={{ name: "", genre: "", image: "", description: "" }}

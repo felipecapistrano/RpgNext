@@ -6,8 +6,8 @@ export default async (req, res) => {
 
   switch (req.method) {
     case "GET": {
-      const { id } = req.query;
-      const games = await Game.find({ players: id, active: true });
+      const { playerId } = req.query;
+      const games = await Game.find({ players: playerId, active: true });
       return res.json(games);
     }
     default:

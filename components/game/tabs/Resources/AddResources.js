@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddResources() {
+export default function AddResources({ game }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -34,7 +34,7 @@ export default function AddResources() {
         <AddIcon />
       </Fab>
       <Dialog open={open} onClose={toggle}>
-        <ModalAddResources onClose={toggle} />
+        <ModalAddResources onClose={toggle} game={game} />
       </Dialog>
     </>
   );

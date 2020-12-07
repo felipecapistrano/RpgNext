@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import useUser from "../components/hooks/useUser";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -18,15 +17,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Game() {
   const classes = useStyles();
-  const router = useRouter();
-  const { game } = router.query;
+
   const user = useUser();
 
-  if (!game || !user) return null;
+  if (!user) return null;
 
   return (
     <div className={classes.root}>
-      <GameContainer game={game} user={user} />
+      <GameContainer user={user} />
     </div>
   );
 }

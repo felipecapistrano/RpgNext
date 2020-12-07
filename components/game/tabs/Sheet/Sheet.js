@@ -2,7 +2,7 @@ import { TextField, Typography } from "@material-ui/core";
 
 import EditSheet from "./EditSheet";
 
-export function Sheet({ sheet }) {
+export function Sheet({ sheet, game }) {
   return (
     <>
       {sheet.length ? (
@@ -22,7 +22,7 @@ export function Sheet({ sheet }) {
       ) : (
         <Typography>A sheet has not yet been created for this game</Typography>
       )}
-      <EditSheet sheet={sheet} />
+      <EditSheet sheet={sheet} game={game} />
     </>
   );
 }

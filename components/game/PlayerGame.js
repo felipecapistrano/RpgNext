@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { Box, Paper, Tab, Tabs } from "@material-ui/core";
-import ReactLoading from "react-loading";
+import { Box, CircularProgress, Paper, Tab, Tabs } from "@material-ui/core";
 
 import { Info, Resources, Character } from "./";
 
-export default function OwnerGame({ data, classes, game }) {
+export default function OwnerGame({ data, classes, game, user }) {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  if (!data) return <ReactLoading />;
+  if (!data) return <CircularProgress />;
 
   return (
     <>
@@ -63,6 +62,7 @@ export default function OwnerGame({ data, classes, game }) {
             <Character
               characters={data.characters}
               game={game}
+              user={user}
               sheet={data.sheet}
             />
           </Box>

@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function EditSheet({ sheet }) {
+export default function EditSheet({ sheet, game }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -38,7 +38,7 @@ export default function EditSheet({ sheet }) {
         open={open}
         onClose={toggle}
       >
-        <ModalEditSheet onClose={toggle} sheet={sheet} />
+        <ModalEditSheet onClose={toggle} sheet={sheet} game={game} />
       </Dialog>
     </>
   );
