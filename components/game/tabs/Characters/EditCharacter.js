@@ -10,7 +10,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function CreateCharacter({ open, onClose, sheet, character }) {
+export default function CreateCharacter({
+  open,
+  onClose,
+  sheet,
+  character,
+  game,
+}) {
   const classes = useStyles();
 
   return (
@@ -24,6 +30,7 @@ export default function CreateCharacter({ open, onClose, sheet, character }) {
           onClose={onClose}
           sheet={sheet}
           character={character}
+          game={game}
         />
       </Dialog>
     </>
