@@ -72,7 +72,11 @@ export default function ModalCreateGame({ onClose, mutate, user }) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose} variant="contained" fullWidth={false}>
+            <Button
+              onClick={() => onClose()}
+              variant="contained"
+              fullWidth={false}
+            >
               Cancel
             </Button>
             <Button type="submit" variant="contained" fullWidth={false}>

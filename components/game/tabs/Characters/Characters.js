@@ -27,7 +27,7 @@ export function Characters({ sheet, characters, game, user }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
-
+  console.log(characters);
   return (
     <>
       {characters.length ? (
@@ -56,6 +56,7 @@ export function Characters({ sheet, characters, game, user }) {
               </Card>
               <EditCharacter
                 sheet={sheet}
+                game={game}
                 character={character}
                 open={open}
                 onClose={toggle}

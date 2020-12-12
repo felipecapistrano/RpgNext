@@ -1,9 +1,10 @@
 import useUser from "../components/hooks/useUser";
 import { makeStyles } from "@material-ui/core/styles";
+import { useRouter } from "next/router";
 
-import GameContainer from "../components/game";
+import GamePage from "../components/game";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     marginLeft: "auto",
@@ -18,13 +19,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Game() {
   const classes = useStyles();
 
+  const router = useRouter();
+  const { game } = router.query;
   const user = useUser();
 
-  if (!user) return null;
+  if (!user || !game) return null;
 
   return (
     <div className={classes.root}>
-      <GameContainer user={user} />
+      <GamePage user={user} game={game} />
     </div>
   );
 }

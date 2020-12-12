@@ -10,6 +10,7 @@ export default async (req, res) => {
       const game = await Game.findOne({ _id: gameId, active: true })
         .populate("players")
         .populate("owner")
+        .populate("resources")
         .populate("characters");
       if (game) {
         return res.json(game);

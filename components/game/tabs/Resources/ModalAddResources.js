@@ -17,9 +17,10 @@ export default function ModalAddResources({ onClose, game }) {
       initialValues={{ name: "", link: "" }}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await axios.post("/api/games/resources", {
-            id: game,
-            resources: values,
+          await axios.post("/api/games/create/resources", {
+            gameId: game,
+            name: values.name,
+            link: values.link,
           });
           resetForm();
           mutate(`/api/games/get?gameId=${game}`);
@@ -57,7 +58,11 @@ export default function ModalAddResources({ onClose, game }) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose} variant="contained" fullWidth={false}>
+            <Button
+              onClick={() => onClose()}
+              variant="contained"
+              fullWidth={false}
+            >
               Cancel
             </Button>
             <Button type="submit" variant="contained" fullWidth={false}>

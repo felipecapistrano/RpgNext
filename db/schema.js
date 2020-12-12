@@ -21,14 +21,24 @@ const CharacterSchema = Schema({
 export const Character =
   mongoose.models.Character || mongoose.model("Character", CharacterSchema);
 
+const ResourceSchema = Schema({
+  game: { type: Schema.Types.ObjectId, required: true, ref: "Game" },
+  name: { type: String, required: true },
+  link: { type: String, required: true },
+  active: Boolean,
+});
+
+export const Resource =
+  mongoose.models.Resource || mongoose.model("Resource", ResourceSchema);
+
 const GameSchema = Schema({
   name: { type: String, required: true },
   owner: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   genre: String,
   image: String,
   description: String,
-  resources: [Object],
   sheet: [Object],
+  resources: [{ type: Schema.Types.ObjectId, ref: "Resource" }],
   players: [{ type: Schema.Types.ObjectId, ref: "User" }],
   characters: [{ type: Schema.Types.ObjectId, ref: "Character" }],
   active: Boolean,

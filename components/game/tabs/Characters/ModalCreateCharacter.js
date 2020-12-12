@@ -17,6 +17,12 @@ export default function ModalCreateCharacter({
   game,
   user,
 }) {
+  async function eraseCharacter(id) {
+    await axios.post(`/api/characters/erase`, { _id: id, gameId: game });
+    mutate(`/api/games/get?gameId=${game}`);
+    onClose();
+  }
+
   const sheetFields = sheet.map((field) => ({
     ...field,
     value: "",
@@ -75,6 +81,17 @@ export default function ModalCreateCharacter({
             ))}
           </DialogContent>
           <DialogActions>
+            {character && (
+              <Button
+                style={{ marginRight: "auto" }}
+                type="button"
+                variant="contained"
+                fullWidth={false}
+                onClick={() => eraseCharacter(character._id)}
+              >
+                Delete
+              </Button>
+            )}
             <Button
               type="button"
               variant="contained"

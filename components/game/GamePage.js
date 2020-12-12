@@ -27,12 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Game({ user }) {
+export default function GamePage({ user, game }) {
   const classes = useStyles();
-  const router = useRouter();
-
-  const { game } = router.query;
-  if (!game) return null;
 
   const { data } = useSWR(`/api/games/get?gameId=${game}`);
   if (!data) return <CircularProgress />;
