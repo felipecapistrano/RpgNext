@@ -26,8 +26,13 @@ const useStyles = makeStyles(() => ({
 export function Characters({ sheet, characters, game, user }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const toggle = () => setOpen(!open);
-  console.log(characters);
+  const [character, setCharacter] = useState();
+
+  function toggle(char) {
+    if (char) setCharacter(char);
+    setOpen(!open);
+  }
+
   return (
     <>
       {characters.length ? (
@@ -37,30 +42,23 @@ export function Characters({ sheet, characters, game, user }) {
           flexDirection="row"
           flexWrap="wrap"
         >
-          {characters.map((character) => (
-            <div key={character.name}>
+          {characters.map((char) => (
+            <div key={char._id}>
               <Card className={classes.card}>
-                <CardActionArea onClick={() => toggle()}>
+                <CardActionArea onClick={() => toggle(char)}>
                   <CardMedia>
-                    <img src={character.image} className={classes.media} />
+                    <img src={char.image} className={classes.media} />
                   </CardMedia>
                   <CardContent>
                     <Typography
                       style={{ fontWeight: "600", textAlign: "center" }}
                       variant="h5"
                     >
-                      {character.name}
+                      {char.name}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>
-              <EditCharacter
-                sheet={sheet}
-                game={game}
-                character={character}
-                open={open}
-                onClose={toggle}
-              />
             </div>
           ))}
         </Box>
@@ -68,6 +66,13 @@ export function Characters({ sheet, characters, game, user }) {
         <Typography>There are no characters created</Typography>
       )}
       <CreateCharacter sheet={sheet} game={game} user={user} />
+      <EditCharacter
+        sheet={sheet}
+        game={game}
+        character={character}
+        open={open}
+        onClose={() => toggle()}
+      />
     </>
   );
 }
