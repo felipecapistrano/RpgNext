@@ -61,6 +61,7 @@ export function Character({ characters, sheet, game, user }) {
           <EditCharacter
             sheet={sheet}
             character={character}
+            game={game}
             open={open}
             onClose={toggle}
           />
