@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, CircularProgress, Paper, Tab, Tabs } from "@material-ui/core";
 
-import { Info, Resources, Character } from "./";
+import { Info, Resources, Character, Notes } from "./";
 
 export default function OwnerGame({ data, classes, game, user }) {
   const [value, setValue] = useState(0);
@@ -23,6 +23,7 @@ export default function OwnerGame({ data, classes, game, user }) {
         <Tab label="Info" />
         <Tab label="Resources" />
         <Tab label="Character" />
+        <Tab label="Notes" />
       </Tabs>
       {value === 0 && (
         <Paper>
@@ -65,6 +66,17 @@ export default function OwnerGame({ data, classes, game, user }) {
               user={user}
               sheet={data.sheet}
             />
+          </Box>
+        </Paper>
+      )}
+      {value === 3 && (
+        <Paper>
+          <Box
+            className={classes.container}
+            display="flex"
+            flexDirection="column"
+          >
+            <Notes game={game} user={user} />
           </Box>
         </Paper>
       )}

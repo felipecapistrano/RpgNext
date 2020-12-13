@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, CircularProgress, Paper, Typography } from "@material-ui/core";
 import useSWR from "swr";
-import { useRouter } from "next/router";
 import axios from "axios";
 
 import OwnerGame from "./OwnerGame";
