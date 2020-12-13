@@ -1,5 +1,5 @@
-import { dbConnect } from "../../../../db/connection";
-import { Game, Resource } from "../../../../db/schema";
+import { dbConnect } from "../../../db/connection";
+import { Game, Resource } from "../../../db/schema";
 
 export default async (req, res) => {
   await dbConnect();

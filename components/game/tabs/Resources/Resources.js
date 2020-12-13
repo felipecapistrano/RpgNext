@@ -15,7 +15,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 export function Resources({ resources, isOwner, game }) {
   async function eraseResource(id) {
-    await axios.post(`/api/games/erase/resources`, { _id: id, gameId: game });
+    await axios.post(`/api/resources/delete`, { _id: id, gameId: game });
     mutate(`/api/games/get?gameId=${game}`);
   }
 

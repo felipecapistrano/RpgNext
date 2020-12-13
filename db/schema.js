@@ -13,7 +13,7 @@ const CharacterSchema = Schema({
   name: { type: String, required: true },
   image: String,
   game: { type: Schema.Types.ObjectId, required: true, ref: "Game" },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   fields: [Object],
   active: Boolean,
 });
@@ -30,6 +30,16 @@ const ResourceSchema = Schema({
 
 export const Resource =
   mongoose.models.Resource || mongoose.model("Resource", ResourceSchema);
+
+const NotesSchema = Schema({
+  gameId: { type: Schema.Types.ObjectId, required: true, ref: "Game" },
+  userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+  notes: { type: String, required: true },
+  active: Boolean,
+});
+
+export const Notes =
+  mongoose.models.Notes || mongoose.model("Notes", NotesSchema);
 
 const GameSchema = Schema({
   name: { type: String, required: true },
