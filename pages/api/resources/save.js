@@ -10,13 +10,9 @@ export default async (req, res) => {
 
       const resource = await new Resource({
         ...params,
-        game: gameId,
+        gameId: gameId,
         active: true,
       }).save();
-      await Game.updateOne(
-        { _id: gameId, active: true },
-        { $push: { resources: resource._id } }
-      );
       return res.json(resource);
     }
   }

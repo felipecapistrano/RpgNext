@@ -1,14 +1,18 @@
 import { dbConnect } from "../../../db/connection";
-import { Character } from "../../../db/schema";
+import { Resource } from "../../../db/schema";
 
 export default async (req, res) => {
   await dbConnect();
 
   switch (req.method) {
     case "GET": {
-      const { id } = req.query;
-      const characters = await Character.find({ game: id, active: true });
-      return res.json(characters);
+      const { gameId } = req.query;
+      const resources = await Resource.find({
+        gameId: gameId,
+        active: true,
+      });
+
+      return res.json(resources);
     }
     default:
       res.statusCode = 500;

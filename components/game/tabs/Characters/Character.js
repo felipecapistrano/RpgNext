@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { Fab, TextField, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  Fab,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
+import useSWR from "swr";
 
 import CreateCharacter from "./CreateCharacter";
 import EditCharacter from "./EditCharacter";
-import useUser from "../../../hooks/useUser";
 
 const useStyles = makeStyles(() => ({
   fab: {
@@ -21,13 +26,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function Character({ characters, sheet, game, user }) {
+export function Character({ sheet, game, user }) {
   const classes = useStyles();
+
+  const { data: characters } = useSWR(`/api/characters/get?gameId=${game}`);
+
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
 
+  if (!characters) return <CircularProgress />;
+  
   const character = characters.filter(
-    (character) => character.user === user
+    (character) => character.userId === user
   )[0];
 
   return (

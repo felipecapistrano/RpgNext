@@ -12,9 +12,10 @@ export const User = mongoose.models.User || mongoose.model("User", UserSchema);
 const CharacterSchema = Schema({
   name: { type: String, required: true },
   image: String,
-  game: { type: Schema.Types.ObjectId, required: true, ref: "Game" },
-  user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+  gameId: { type: Schema.Types.ObjectId, required: true, ref: "Game" },
+  userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   fields: [Object],
+  npc: Boolean,
   active: Boolean,
 });
 
@@ -22,7 +23,7 @@ export const Character =
   mongoose.models.Character || mongoose.model("Character", CharacterSchema);
 
 const ResourceSchema = Schema({
-  game: { type: Schema.Types.ObjectId, required: true, ref: "Game" },
+  gameId: { type: Schema.Types.ObjectId, required: true, ref: "Game" },
   name: { type: String, required: true },
   link: { type: String, required: true },
   active: Boolean,
@@ -48,9 +49,7 @@ const GameSchema = Schema({
   image: String,
   description: String,
   sheet: [Object],
-  resources: [{ type: Schema.Types.ObjectId, ref: "Resource" }],
   players: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  characters: [{ type: Schema.Types.ObjectId, ref: "Character" }],
   active: Boolean,
 });
 
