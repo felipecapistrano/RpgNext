@@ -17,13 +17,13 @@ export default function ModalAddResources({ onClose, game }) {
       initialValues={{ name: "", link: "" }}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await axios.post("/api/games/create/resources", {
+          await axios.post("/api/resources/save", {
             gameId: game,
             name: values.name,
             link: values.link,
           });
           resetForm();
-          mutate(`/api/games/get?gameId=${game}`);
+          mutate(`/api/resources/get?gameId=${game}`);
           onClose();
         } catch (e) {
           alert(e);

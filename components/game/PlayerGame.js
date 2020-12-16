@@ -49,7 +49,7 @@ export default function OwnerGame({ data, classes, game, user }) {
             display="flex"
             flexDirection="column"
           >
-            <Resources resources={data.resources} />
+            <Resources game={game} />
           </Box>
         </Paper>
       )}

@@ -11,6 +11,7 @@ import axios from "axios";
 import { mutate } from "swr";
 
 export default function ModalCreateCharacter({
+  owner,
   onClose,
   sheet,
   character,
@@ -19,7 +20,7 @@ export default function ModalCreateCharacter({
 }) {
   async function eraseCharacter(id) {
     await axios.post(`/api/characters/erase`, { _id: id, gameId: game });
-    mutate(`/api/games/get?gameId=${game}`);
+    mutate(`/api/characters/get?gameId=${game}`);
     onClose();
   }
 
@@ -30,16 +31,23 @@ export default function ModalCreateCharacter({
 
   return (
     <Formik
-      initialValues={character || { name: "", image: "", fields: sheetFields }}
+      initialValues={
+        character || {
+          name: "",
+          image: "",
+          fields: sheetFields,
+          gameId: game,
+          userId: user,
+          npc: !!owner,
+        }
+      }
       onSubmit={async (values, { resetForm }) => {
         try {
           await axios.post("/api/characters/create", {
-            gameId: game,
-            userId: user,
             ...values,
           });
           resetForm();
-          mutate(`/api/games/get?gameId=${game}`);
+          mutate(`/api/characters/get?gameId=${game}`);
           onClose();
         } catch (e) {
           alert(e);

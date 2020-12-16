@@ -53,6 +53,9 @@ const theme = createMuiTheme({
     },
   },
   props: {
+    MuiCircularProgress: {
+      color: "secondary",
+    },
     MuiTextField: {
       color: "secondary",
       fullWidth: true,
