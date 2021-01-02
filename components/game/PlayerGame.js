@@ -61,7 +61,6 @@ export default function OwnerGame({ data, classes, game, user }) {
             flexDirection="column"
           >
             <Character
-              characters={data.characters}
               game={game}
               user={user}
               sheet={data.sheet}
