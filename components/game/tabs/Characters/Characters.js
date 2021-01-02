@@ -1,6 +1,7 @@
-import { Button, CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress, Typography } from "@material-ui/core";
 import useSWR from "swr";
 import CharacterContainer from "./CharacterContainer";
+import CreateCharacter from "./CreateCharacter";
 
 export function Characters({ sheet, game, user }) {
   const { data: characters } = useSWR(`/api/characters/get?gameId=${game}`);
@@ -31,6 +32,7 @@ export function Characters({ sheet, game, user }) {
       ) : (
         <Typography>There are no players currently created</Typography>
       )}
+      <CreateCharacter owner sheet={sheet} game={game} user={user} />
     </>
   );
 }
