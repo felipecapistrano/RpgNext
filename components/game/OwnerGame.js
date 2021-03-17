@@ -1,23 +1,17 @@
 import { useState } from "react";
-import { Box, CircularProgress, Paper, Tab, Tabs } from "@material-ui/core";
+import { Box, Paper, Tab, Tabs } from "@material-ui/core";
 
 import { Info, Resources, Sheet, Characters, Notes } from "./";
 
 export default function OwnerGame({ data, classes, game, user }) {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  if (!data) return <CircularProgress />;
-
   return (
     <>
       <Tabs
         className={classes.tabs}
         value={value}
-        onChange={handleChange}
+        onChange={(e, value) => setValue(value)}
         centered
       >
         <Tab label="Info" />

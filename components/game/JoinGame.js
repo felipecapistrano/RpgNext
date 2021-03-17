@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -7,6 +8,12 @@ import {
 } from "@material-ui/core";
 
 export default function JoinGame({ open, handleClose }) {
+  const [clicked, setClicked] = useState(false);
+
+  const close = () => {
+    setClicked(true);
+    handleClose(true);
+  };
   return (
     <Dialog open={open} onClose={() => handleClose(false)}>
       <DialogTitle>Join game</DialogTitle>
@@ -15,9 +22,10 @@ export default function JoinGame({ open, handleClose }) {
       </DialogContent>
       <DialogActions>
         <Button
+          disabled={clicked}
           fullWidth={false}
           variant="contained"
-          onClick={() => handleClose(true)}
+          onClick={close}
         >
           Yes
         </Button>

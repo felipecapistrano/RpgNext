@@ -56,7 +56,6 @@ export default function CharacterContainer({ characters, sheet, game, user }) {
           </div>
         ))}
       </Box>
-      <CreateCharacter owner sheet={sheet} game={game} user={user} />
       <EditCharacter
         sheet={sheet}
         game={game}
