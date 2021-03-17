@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
 
 export function Info({ image, owner, genre, players, description }) {
   const classes = useStyles();
-  const playerList = players.map((player) => `${player.name} `);
+  const playersLength = players.length;
+  const playerList = players.map((player, index) => {
+    if (playersLength === index + 1) return `${player.name}`;
+    return `${player.name}, `;
+  });
 
   return (
     <>

@@ -7,14 +7,14 @@ export default async (req, res) => {
   switch (req.method) {
     case "GET": {
       const { gameId } = req.query;
-      const game = await Game.findOne({ _id: gameId, active: true })
-        .populate("players")
-        .populate("owner")
-        .populate("resources")
-        .populate("characters");
-      if (game) {
+      try {
+        const game = await Game.findOne({ _id: gameId, active: true })
+          .populate("players")
+          .populate("owner")
+          .populate("resources")
+          .populate("characters");
         return res.json(game);
-      } else {
+      } catch (e) {
         res.statusCode = 401;
         return res.send("Game doesn't exist");
       }

@@ -19,9 +19,6 @@ export default function LoginPage() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   return (
     <Paper className={classes.paper}>
       <Box display="flex" flexDirection="column">
@@ -32,7 +29,7 @@ export default function LoginPage() {
           className={classes.tabs}
           variant="fullWidth"
           value={value}
-          onChange={handleChange}
+          onChange={(e, value) => setValue(value)}
         >
           <Tab label="Login" />
           <Tab label="Register" />

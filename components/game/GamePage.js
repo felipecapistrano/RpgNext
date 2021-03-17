@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, CircularProgress, Paper, Typography } from "@material-ui/core";
 import useSWR from "swr";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 import OwnerGame from "./OwnerGame";
 import PlayerGame from "./PlayerGame";
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GamePage({ user, game }) {
   const classes = useStyles();
+  const router = useRouter();
 
   const { data } = useSWR(`/api/games/get?gameId=${game}`);
   if (!data) return <CircularProgress />;
@@ -43,6 +45,7 @@ export default function GamePage({ user, game }) {
   }
 
   if (!isPlayer) return <JoinGame open handleClose={handleClose} />;
+
   return (
     <Paper className={classes.paper}>
       <Box display="flex" flexDirection="column">

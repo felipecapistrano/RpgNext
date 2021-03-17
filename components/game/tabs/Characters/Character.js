@@ -35,7 +35,7 @@ export function Character({ sheet, game, user }) {
   const toggle = () => setOpen(!open);
 
   if (!characters) return <CircularProgress />;
-  console.log(characters)
+
   const character = characters.players.filter(
     (character) => character.userId === user
   )[0];
